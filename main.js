@@ -5,13 +5,7 @@ const FULL_HEART = '♥'
 // Your JavaScript code goes here!
 document.addEventListener('DOMContentLoaded', () => {
   listenForLikes();
-  
-
-
-
-
 })
-
 
 
 
@@ -19,10 +13,8 @@ function listenForLikes() {
   const likes = document.querySelectorAll('.like-glyph');
   likes.forEach((like) => {
     like.addEventListener('click', (e) => {
-      
       mimicServerCall()
-        .then(res => {
-          console.log(res);
+        .then(() => {
           displayLike(e.target);
         })
         .catch(err => {
@@ -34,7 +26,6 @@ function listenForLikes() {
 }
 
 function displayLike(like) {
-  console.log(like)
   if (like.innerHTML == EMPTY_HEART) {
     like.innerHTML = FULL_HEART;
     like.classList.toggle("activated-heart", true);
@@ -56,9 +47,7 @@ function displayError(msg) {
    }, 5000);
 
 }
-// function likePost(e) {
-//   mimicServerCall
-// }
+
 //------------------------------------------------------------------------------
 // Ignore after this point. Used only for demo purposes
 //------------------------------------------------------------------------------
