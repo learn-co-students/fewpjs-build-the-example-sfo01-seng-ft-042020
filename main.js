@@ -3,10 +3,62 @@ const EMPTY_HEART = '♡'
 const FULL_HEART = '♥'
 
 // Your JavaScript code goes here!
+document.addEventListener('DOMContentLoaded', () => {
+  listenForLikes();
+  
 
 
 
 
+})
+
+
+
+
+function listenForLikes() {
+  const likes = document.querySelectorAll('.like-glyph');
+  likes.forEach((like) => {
+    like.addEventListener('click', (e) => {
+      
+      mimicServerCall()
+        .then(res => {
+          console.log(res);
+          displayLike(e.target);
+        })
+        .catch(err => {
+          console.log(err);
+          displayError(err)
+        });
+    })
+  })
+}
+
+function displayLike(like) {
+  console.log(like)
+  if (like.innerHTML == EMPTY_HEART) {
+    like.innerHTML = FULL_HEART;
+    like.classList.toggle("activated-heart", true);
+  } else {
+    like.innerHTML = EMPTY_HEART;
+    like.classList.toggle("activated-heart", false);
+  }
+}
+
+function displayError(msg) {
+  const errorModal = document.getElementById("modal");
+  const message = document.getElementById('modal-message');
+  message.innerHTML = msg
+  errorModal.classList.toggle("hidden", false);
+
+  setTimeout(function(){ 
+    errorModal.classList.toggle("hidden", true);
+    message.innerHTML = "";
+   }, 5000);
+
+}
+// function likePost(e) {
+//   mimicServerCall
+// }
 //------------------------------------------------------------------------------
 // Ignore after this point. Used only for demo purposes
 //------------------------------------------------------------------------------
