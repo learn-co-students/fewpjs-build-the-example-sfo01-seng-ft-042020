@@ -13,12 +13,15 @@ function listenForLikes() {
   const likes = document.querySelectorAll('.like-glyph');
   likes.forEach((like) => {
     like.addEventListener('click', (e) => {
+      like.classList.toggle("spinner", true)
       mimicServerCall()
         .then(() => {
+          like.classList.toggle("spinner", false)
           displayLike(e.target);
         })
         .catch(err => {
           console.log(err);
+          like.classList.toggle("spinner", false)
           displayError(err)
         });
     })
