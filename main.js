@@ -2,9 +2,35 @@
 const EMPTY_HEART = '♡'
 const FULL_HEART = '♥'
 
-// Your JavaScript code goes here!
+document.body.addEventListener('click', (e)=>handleMyHeart(e));
 
 
+
+
+
+
+
+
+//handleMyHeart(e: Event)  applies to <body> but we check for like-glyph class
+function handleMyHeart(e) {
+  
+  if (e.target.classList.contains('like-glyph')) {
+    const thisHeart = e.target
+    const priorValue = (thisHeart.innerText === EMPTY_HEART ? false : true)
+    result = mimicServerCall();
+    
+    if (result) {
+      //toggle heart glyph
+      thisHeart.innerText = (priorValue ? EMPTY_HEART : FULL_HEART)
+      priorValue ? (thisHeart.classList.remove('activated-heart')) : (thisHeart.classList.add('activated-heart'))
+    }
+  }
+}
+
+function removeModal() {
+  const errorMsg = document.getElementById('modal')
+  errorMsg.classList.add('hidden')
+}
 
 
 //------------------------------------------------------------------------------
@@ -21,5 +47,9 @@ function mimicServerCall(url="http://mimicServer.example.com", config={}) {
         resolve("Pretend remote server notified of action!");
       }
     }, 300);
+  }).catch(()=>{
+    const errorMsg = document.getElementById('modal')
+    errorMsg.classList.remove('hidden')
+    window.setTimeout(removeModal, 5000)
   });
 }
