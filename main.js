@@ -24,7 +24,7 @@ function handleMyHeart(e) {
     }).catch(()=>{
       const errorMsg = document.getElementById('modal')
       errorMsg.classList.remove('hidden')
-      window.setTimeout(removeModal, 1000)
+      window.setTimeout(removeModal, 5000)
     });
   }
 }
