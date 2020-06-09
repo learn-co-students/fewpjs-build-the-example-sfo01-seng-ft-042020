@@ -17,13 +17,15 @@ function handleMyHeart(e) {
   if (e.target.classList.contains('like-glyph')) {
     const thisHeart = e.target
     const priorValue = (thisHeart.innerText === EMPTY_HEART ? false : true)
-    result = mimicServerCall();
-    
-    if (result) {
+    result = mimicServerCall().then(()=>{
       //toggle heart glyph
       thisHeart.innerText = (priorValue ? EMPTY_HEART : FULL_HEART)
-      priorValue ? (thisHeart.classList.remove('activated-heart')) : (thisHeart.classList.add('activated-heart'))
-    }
+      thisHeart.classList.toggle('activated-heart')
+    }).catch(()=>{
+      const errorMsg = document.getElementById('modal')
+      errorMsg.classList.remove('hidden')
+      window.setTimeout(removeModal, 1000)
+    });
   }
 }
 
@@ -47,9 +49,5 @@ function mimicServerCall(url="http://mimicServer.example.com", config={}) {
         resolve("Pretend remote server notified of action!");
       }
     }, 300);
-  }).catch(()=>{
-    const errorMsg = document.getElementById('modal')
-    errorMsg.classList.remove('hidden')
-    window.setTimeout(removeModal, 5000)
-  });
+  })
 }
